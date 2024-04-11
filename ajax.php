@@ -29,6 +29,11 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_view.class.ph
 require_login();
 $action = required_param('action', PARAM_ALPHAEXT);
 
+if (!in_array($action, ['sync_all_submissions', 'get_submissions'])) {
+    // No changes will be made to the session.
+    \core\session\manager::write_close();
+}
+
 switch ($action) {
     case "check_anon":
         $assignmentid = required_param('assignment', PARAM_INT);
